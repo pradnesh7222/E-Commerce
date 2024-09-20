@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Orders</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .order-card {
+            margin-bottom: 20px;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            background-color: white;
+            padding: 20px;
+        }
+        .order-item {
+            margin-left: 15px;
+        }
+        .order-title {
+            background-color: #7c7c7d;
+            color: white;
+            padding: 10px;
+            border-radius: 8px 8px 0 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Your Orders</h2>
+        
+        {% if orders %}
+            {% for order in orders %}
+                <div class="order-card">
+                    <div class="order-title">
+                        <h4>User: {{ order.user }} (Ordered on: {{ order.datetime_ofpayment }})</h4>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        {% for item in order.items.all %}
+                            <li class="list-group-item order-item">
+                                Item : {{ item.product.name }} | Quantity : {{ item.quantity }} | Price : {{ item.product.price }} Rs
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>You haven't made any orders yet.</p>
+            
+        {% endif %}
+        <a href="{% url 'index' %}" class="btn btn-info">Home</a>
+    </div>
+    
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

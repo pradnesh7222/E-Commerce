@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link href="{% static 'css/login.css'%}" rel="stylesheet">
+<style>
+       
+
+
+form {
+    max-width: 500px; /* Set a maximum width for the form */
+    margin: 0 auto; /* Center the form */
+    padding: 20px; /* Add padding inside the form */
+    border: 1px solid #ddd; /* Optional: Add a border */
+    border-radius: 5px; /* Optional: Add rounded corners */
+    height: 740px;
+}
+
+form button {
+    margin-top: 1px; /* Decrease the space above the button */
+}
+
+form .form-group {
+    margin-bottom: 5px; /* Decrease the space below each form group */
+}
+
+form .form-control {
+    font-size: 14px; /* Adjust the font size of form controls */
+    padding: 15px; /* Decrease the padding inside form controls */
+}
+
+</style>
+</head>
+<body>
+    <form method="post" enctype="multipart/form-data">
+        
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Update Product</button>
+    </form>
+    <script src="{% static 'js/main.js'%}"></script>
+</body>
+</html>

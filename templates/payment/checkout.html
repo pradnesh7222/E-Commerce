@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stripe Payment</title>
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    <h1>Complete Payment</h1>
+    <button id="checkout-button">Pay with Stripe</button>
+
+    <script type="text/javascript">
+        var stripe = Stripe('pk_test_51PyVvYGp9nfdxi256gmyTEsfQxAcRnvbQ3Z4UBumgV3M6xwXR8ZN0rWbN0eYmr7nVGdMTnSTcnGKMCqfeVCPCnbo008Vh9pxG9');
+
+        document.getElementById('checkout-button').addEventListener('click', function () {
+            fetch('/create-checkout-session/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+            })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (sessionId) {
+                return stripe.redirectToCheckout({ sessionId: sessionId.id });
+            })
+            .then(function (result) {
+                if (result.error) {
+                    alert(result.error.message);
+                }
+            })
+            .catch(function (error) {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>

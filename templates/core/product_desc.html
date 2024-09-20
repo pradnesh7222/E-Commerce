@@ -1,0 +1,71 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prodcut Details</title>
+    <link href="{% static 'css/main.css'%}" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+</head>
+<body>
+    {% if messages %}
+    <div class="container mt-3">
+        <div class="alert alert-info" role="alert">
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+    
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 mt-5">
+                    
+                        <img src="{{ product.img.url }}" class="img-fluid" alt="{{ product_object.name }}" style="width: 100%; height: auto;">
+                    
+                </div>
+                <div class="col-md-6 mt-5">
+                    <h2>{{ product.name }}</h2><br>
+                    <p><strong>Price :</strong> {{product.price}} Rs</p>
+                    <p><strong>Description :</strong> {{ product.desc }}</p><br>
+                    
+                    {% if user.is_authenticated %}
+                    <form method="POST" action="{% url 'add_to_cart' product.pk %}">
+                        {% csrf_token %}
+                        
+                        <button type="submit" class="btn btn-success mt-2">Add to cart</button>
+                        <a href="{% url 'order_list' %}" class="btn btn-secondary mt-2">Go to Cart</a>
+                        
+                    </form>
+                    {% else %}
+                    <a href="{% url 'user_login' %}" class="btn btn-secondary mt-2">Add to Cart</a>
+                    
+                    {% endif %}
+
+                    
+                    {% if user.is_superuser or user.is_staff %}
+                    <hr style="border: 1px solid #000;">
+                    <a href="{% url 'edit_product' product.id %}" class="btn btn-primary mt-2">Edit Product</a>
+                    <a href="{% url 'delete_product' product.id %}" class="btn btn-danger mt-2">Delete Product</a>
+                          
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+    
+    <script src="{% static 'js/main.js'%}"></script>
+    
+</body>
+</html>

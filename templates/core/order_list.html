@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+{% load static %}
+{% load cart_template_tag %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>order_list</title>
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            
+        }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+        }
+        
+
+        table {
+            text-align: center;
+        }
+
+        .product-list {
+            list-style: none;
+            padding: 0;
+        }
+        .product-item {
+            
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .product-details {
+            flex: 2;
+            margin-left: 20px;
+        }
+        .product-price {
+            font-weight: bold;
+            padding: 20px
+        }
+        .add-to-cart-btn {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+        .add-to-cart-btn:hover {
+            background-color: #218838;
+        }
+    </style>
+    <link href="{% static 'css/main.css'%}" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+    <header>
+        {% if messages %}
+            <div class="alert alert-info" role="alert">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </header>
+
+<body>
+    <center>
+        <section class="inner-page">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card-shadow">
+                            <div class="card-body">
+                            
+                            <h1><span>Your Cart</span></h1><br>
+                            <table border="1" style="width: 1000px;">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">No</th>
+                                        <th scope="col">Item Name</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Total Item price</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for order_item in order.items.all %}
+                                    <tr>
+                                        <th scope="row">{{forloop.counter}}</th>
+                                        <td class="product-item">{{ order_item.product.name }}</td>
+                                        <td class="product-price">{{ order_item.product.price }}</td>
+                                        
+                                        <td style="padding: 20px;">
+                                            <a href="{% url 'remove_item' order_item.product.pk %}">-</a> &nbsp;&nbsp;
+                                            {{ order_item.quantity }} &nbsp;&nbsp;
+                                            <a href="{% url 'add_item' order_item.product.pk %}">+</i></a>
+                                        </td>
+                                        <td>Rs. {{ order_item.get_total_item_price }}</td>
+                                        <td>
+                                            <a href="{% url 'checkout_page' order_item.id %}" class="add-to-cart-btn">Cheakout</a>
+                                        </td>
+                                    </tr>
+                                    {% empty %}
+                                    <tr class="row100 body">
+                                        <td class="cell100 column1" colspan="6">Your cart is Empty</td>
+                                    </tr>
+                                    
+                                    
+                                    
+                                    {% endfor %}
+                                    
+                                    {% if order.get_total_price %}
+                                    <tr class="row100 body"style=background-color:#191919>
+                                        <td class="cell100 column1" style="color:white;"><b>Total Price</b></td>
+                                        <td class="cell100 column2"></td>
+                                        <td class="cell100 column3"></td>
+                                        <td class="cell100 column4"></td>
+                                        <td class="cell100 column5" style="color:white;">
+                                            <i class="fas fa-rupee-sign"></i> Rs.{{order.get_total_price}}
+                                        </td>
+                                    </tr>
+                                    {% endif %}
+                                </tbody>
+                            </table><br>
+                            <tr class="row100 body">
+                                <td class="cell100 column1">
+                                    <a href="{% url 'index' %}" class="btn btn-primary">Continue Shopping</a>
+                                </td>
+                            </tr>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </center>
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

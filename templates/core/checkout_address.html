@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout Page</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+<body>
+    <div>
+    {% if payment_allow == 'allow' %}
+    <a href="{% url 'create_payment_intent' %}" class="btn btn-primary">Go for Payment</a>
+    {% else %}
+    
+    {% if messages %}
+    {% for message in messages %}
+    <h3 style="color:red;">{{message}}</h3>
+    {% endfor %}
+    {% endif %}
+    
+    <form method="post">
+        <h2>Checkout Address</h2>
+        {% csrf_token %}
+        {{form}}
+        <button class="btn btn-primary btn-lg" type="submit">Checkout</button><br>
+    </form>
+    {% endif %}
+    </div>
+</body>
+    
+            
+
+
+
+              

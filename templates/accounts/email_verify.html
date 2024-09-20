@@ -1,0 +1,11 @@
+<center><strong>VERIFY YOUR ACCOUNT</strong></center>
+
+<center><p>Check the inbox of your Email = {{email}} - and enter the otp</p></center>
+
+<body>
+    <form method="POST">
+    {% csrf_token %}    
+    <center>Enter the otp : <input type="text" placeholder='enter the otp' name='otp'></center><br><br>
+    <center><button type='submit'>Verify</button></center>
+    </form>
+</body>

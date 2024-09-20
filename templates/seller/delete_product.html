@@ -1,0 +1,21 @@
+
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link href="{% static 'css/login.css'%}" rel="stylesheet">
+</head>
+<body>
+    
+    <form method="post">
+        <h1>Delete Product</h1>
+        <p>Are you sure you want to delete the product "{{ product.name }}"?</p>
+        {% csrf_token %}
+        <button type="submit">Yes, delete</button>
+        <a href="{% url 'product_desc' product.pk  %}" class="btn btn-secondary mt-2">Cancel</a>
+    </form>
+    <script src="{% static 'js/main.js'%}"></script>
+</body>
+</html>

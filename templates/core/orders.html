@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .order-card {
+            margin-bottom: 20px;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            background-color: white;
+            padding: 20px;
+        }
+        .order-item {
+            margin-left: 15px;
+        }
+        .order-title {
+            background-color: #7c7c7d;
+            color: white;
+            padding: 10px;
+            border-radius: 8px 8px 0 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">All Orders</h2>
+        {% for order in orders %}
+        <div class="order-card">
+            <div class="order-title">
+                <h4>Order by - {{ order.user.username }}</h4>
+            </div>
+            <ul class="list-group list-group-flush">
+                {% for item in order.items.all %}
+                    <li class="list-group-item order-item">{{ item.quantity }} x {{ item.product.name }} 
+                        <span class="float-right">Amount : {{ item.product.price }} Rs</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% empty %}
+        <p class="text-center">No orders found.</p>
+        {% endfor %}
+        <a href="{% url 'index' %}" class="btn btn-info">Home</a>
+    </div>
+    
+    <script src="{% static 'js/main.js'%}"></script>
+</body>
+</html>

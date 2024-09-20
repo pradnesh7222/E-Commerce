@@ -1,0 +1,24 @@
+
+
+
+{% load static %}
+
+<link href="{% static 'css/login.css' %}" rel="stylesheet" />
+<div class="container">
+    <div class="card">
+      <h2>Register Here</h2>
+      {% if messages %}
+      {% for message in messages %}
+      <h1 class="login-title badge badge-light" style="color:red;">{{message}}</h1>
+      {% endfor %}
+      {% endif %}
+      <form action="" method=POST>
+        {% csrf_token %}
+        {{ form.as_p }}
+        
+        <button type="submit">Register</button>
+      </form>
+         
+        
+    </div>
+  </div>

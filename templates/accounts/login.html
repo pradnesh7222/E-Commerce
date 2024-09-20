@@ -1,0 +1,33 @@
+
+    
+            
+{% load static %}
+
+<link href="{% static 'css/login.css' %}" rel="stylesheet" />
+<div class="container">
+    <div class="card">
+      <h2>Login</h2>
+      {% if messages %}
+      {% for message in messages %}
+      <h1 class="login-title badge badge-light" style="color:red;">{{message}}</h1>
+      {% endfor %}
+      {% endif %}
+      <form action="" method=POST>
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <input type="username" class="form-control" name="username" id="username" value="" placeholder="Username">
+        <input type="password" class="form-control" name="password" id="password" value="" placeholder="Password">
+        <button class="btn btn-primary btn-lg" type="submit">Log in</button><br>
+        
+        
+        <p class="m-0 text-secondary text-center">Don't have an account? <a href="{% url 'user_register' %}" class="link-primary text-decoration-none">Register</a></p>
+
+      </form>
+      <a href="{% url 'reset' %}">Forgot Password</a> |
+      <a href="{% url 'change_pass' %}">Change Password</a>
+    </div>
+  </div>
+
+
+              
